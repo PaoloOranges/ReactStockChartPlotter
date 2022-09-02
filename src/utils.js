@@ -30,11 +30,16 @@ export function getData() {
 
 export function getData2() {
 	const dataParsed = new Object();
-	dataParsed.Prices = jsonData.Charts.ETHEUR.Series.Price.Values;
-	dataParsed.Prices.forEach( p => (p.x = parseDate2(p.x)));
+	let newData = [];
 
+
+	newData = jsonData.Charts.ETHEUR.Series.Price.Values.map( v => 
+		({ date: parseDate2(v.x),
+		   close: v.y})
+	);
+	
 	dataParsed.Indicators = jsonData.Charts.Indicators;
 	dataParsed.Orders = jsonData.Orders;
-	
-	return dataParsed;
+
+	return newData;
 }

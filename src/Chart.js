@@ -13,7 +13,7 @@ import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 
 class CustomChart extends React.Component {
 	render() {
-		const { type, width, data, ratio } = this.props;
+		const { type, width, data, ratio} = this.props;
 		const xAccessor = d => d.date;
 		const xExtents = [
 			xAccessor(last(data)),
@@ -31,7 +31,7 @@ class CustomChart extends React.Component {
 					xScale={scaleTime()}
 					xExtents={xExtents}>
 
-				<Chart id={1} yExtents={d => [d.high, d.low]}>
+				<Chart id={1} yExtents={d => [d.close, d.close]}>
 					<XAxis axisAt="bottom" orient="bottom" ticks={6}/>
 					<YAxis axisAt="left" orient="left" ticks={5} />
 					{/* <CandlestickSeries width={timeIntervalBarWidth(utcDay)}/> */}
