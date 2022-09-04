@@ -19,6 +19,12 @@ class CustomChart extends React.Component {
 			xAccessor(last(data)),
 			xAccessor(data[data.length - 100])
 		];
+		const orderAccessor = d => {
+			if(d.order !== undefined)
+			{
+				return d.order.Price;
+			}
+		}
 		return (
 			<ChartCanvas height={600}
 					ratio={ratio}
@@ -36,8 +42,8 @@ class CustomChart extends React.Component {
 					<YAxis axisAt="left" orient="left" ticks={5} />
 					{/* <CandlestickSeries width={timeIntervalBarWidth(utcDay)}/> */}
 
-					<LineSeries yAccessor={d => d.close} stroke="#ff7f0e" strokeDasharray="Dot" />
-					<ScatterSeries yAccessor={d => d.close} marker={SquareMarker} markerProps={{ width: 6, stroke: "#ff7f0e", fill: "#ff7f0e" }} />
+					<LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
+					<ScatterSeries yAccessor={orderAccessor} marker={SquareMarker} markerProps={{ width: 6, stroke: "#ff7f0e", fill: "#ff7f0e" }} />
 				</Chart>
 
 
