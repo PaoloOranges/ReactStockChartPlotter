@@ -6,7 +6,8 @@ import { scaleTime } from "d3-scale";
 import { utcDay } from "d3-time";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
-import { CandlestickSeries, LineSeries, ScatterSeries, SquareMarker } from "react-stockcharts/lib/series";
+import { LineSeries, ScatterSeries, SquareMarker, TriangleMarker } from "react-stockcharts/lib/series";
+
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
@@ -17,10 +18,17 @@ class CustomChart extends React.Component {
 		const xAccessor = d => d.date;
 		const xExtents = [
 			xAccessor(last(data)),
-			xAccessor(data[data.length - 100])
+			xAccessor(data[data.length - 250])
 		];
-		const orderAccessor = d => {
-			if(d.order !== undefined)
+		const buyOrderAccessor = d => {
+			if(d.order !== undefined && d.order.Direction === 0)
+			{
+				return d.order.Price;
+			}
+		}
+
+		const sellOrderAccessor = d => {
+			if(d.order !== undefined && d.order.Direction === 1)
 			{
 				return d.order.Price;
 			}
@@ -43,9 +51,9 @@ class CustomChart extends React.Component {
 					{/* <CandlestickSeries width={timeIntervalBarWidth(utcDay)}/> */}
 
 					<LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
-					<ScatterSeries yAccessor={orderAccessor} marker={SquareMarker} markerProps={{ width: 6, stroke: "#ff7f0e", fill: "#ff7f0e" }} />
+					<ScatterSeries yAccessor={buyOrderAccessor} marker={SquareMarker} markerProps={{ width: 10, stroke: "#34eb5e", fill: "#34eb93" }} />
+					<ScatterSeries yAccessor={sellOrderAccessor} marker={TriangleMarker} markerProps={{ width: 10, stroke: "#eb3434", fill: "#eb7434" }} />
 				</Chart>
-
 
 			</ChartCanvas>
 		);
