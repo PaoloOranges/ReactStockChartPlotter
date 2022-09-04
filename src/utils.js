@@ -39,22 +39,27 @@ export function getDataLocal() {
 	);
 	
 	dataParsed.Indicators = jsonData.Charts.Indicators;
-	dataParsed.Orders = jsonData.Orders;
 
-	let startIndex = 0;
-	for (const [key, value] of Object.entries(jsonData.Orders))
+	newData = parseAndFillOrders(newData, jsonData.Orders)
+
+	return newData;
+}
+
+function parseAndFillOrders(dataArray, orders)
+{
+	for (const [key, value] of Object.entries(orders))
 	{
 		// 2021-10-20T00:00:00Z
 		const parseDateOrder = timeParse("%Y-%m-%dT%H:%M:%SZ");
 
 		const date = parseDateOrder(value.Time);
-		let index = newData.findIndex(d => d.date.getTime() === date.getTime());
+		let index = dataArray.findIndex(d => d.date.getTime() === date.getTime());
 		if(index !== -1)
 		{
-			const new_obj = { ...newData[index], order: value};
-			newData[index] = new_obj;
+			const new_obj = { ...dataArray[index], order: value};
+			dataArray[index] = new_obj;
 		}
-		console.log(index);
 	}
-	return newData;
+
+	return dataArray
 }
