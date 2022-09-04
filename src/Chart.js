@@ -14,6 +14,8 @@ import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { createVerticalLinearGradient, hexToRGBA } from "react-stockcharts/lib/utils";
 
+import { CharCustomIndicatorRender } from "./CharCustomIndicatorRender.js"
+
 const canvasGradient = createVerticalLinearGradient([
 	{ stop: 0, color: hexToRGBA("#b5d0ff", 0.2) },
 	{ stop: 0.7, color: hexToRGBA("#6fa4fc", 0.4) },
@@ -41,6 +43,13 @@ class CustomChart extends React.Component {
 				return d.order.Price;
 			}
 		}
+
+		const hullMAAccessor = d => {
+			if(d.indicators !== undefined && d.indicators.HullMA !== undefined)
+			{
+				return d.indicators.HullMA;
+			}
+		}
 		return (
 			<ChartCanvas height={600}
 					ratio={ratio}
@@ -61,6 +70,8 @@ class CustomChart extends React.Component {
 					<AreaSeries yAccessor={d => d.close} strokeDasharray="Solid" strokeWidth={2} interpolation={curveMonotoneX}	canvasGradient={canvasGradient} />
 					<ScatterSeries yAccessor={buyOrderAccessor} marker={SquareMarker} markerProps={{ width: 10, stroke: "#34eb5e", fill: "#34eb93" }} />
 					<ScatterSeries yAccessor={sellOrderAccessor} marker={TriangleMarker} markerProps={{ width: 10, stroke: "#eb3434", fill: "#eb7434" }} />
+					
+					<CharCustomIndicatorRender hullMAAccessor={hullMAAccessor}/>
 				</Chart>
 
 			</ChartCanvas>
