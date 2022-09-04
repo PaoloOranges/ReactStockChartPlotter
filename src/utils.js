@@ -49,6 +49,11 @@ export function getDataLocal() {
 
 		const date = parseDateOrder(value.Time);
 		let index = newData.findIndex(d => d.date.getTime() === date.getTime());
+		if(index !== -1)
+		{
+			const new_obj = { ...newData[index], order: value};
+			newData[index] = new_obj;
+		}
 		console.log(index);
 	}
 	return newData;
