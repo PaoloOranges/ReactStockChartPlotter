@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Chart from './Chart';
-import { getData, getData2 } from "./utils"
+import { getData, getDataLocal } from "./utils"
 
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
@@ -11,7 +11,7 @@ class ChartComponent extends React.Component {
 		// getData().then(data => {
 		// 	this.setState({ data })
 		// })
-		const data = getData2();
+		const data = getDataLocal();
 		this.setState({ data });
 	}
 	render() {

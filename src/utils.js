@@ -19,7 +19,6 @@ function parseData(parse) {
 }
 
 const parseDate = timeParse("%Y-%m-%d");
-const parseDate2 = timeParse("%s");
 
 export function getData() {
 	const promiseMSFT = fetch("https://cdn.rawgit.com/rrag/react-stockcharts/master/docs/data/MSFT.tsv")
@@ -28,18 +27,29 @@ export function getData() {
 	return promiseMSFT;
 }
 
-export function getData2() {
+export function getDataLocal() {
+	const parseDateEpoch = timeParse("%s");
+
 	const dataParsed = new Object();
 	let newData = [];
 
-
 	newData = jsonData.Charts.ETHEUR.Series.Price.Values.map( v => 
-		({ date: parseDate2(v.x),
+		({ date: parseDateEpoch(v.x),
 		   close: v.y})
 	);
 	
 	dataParsed.Indicators = jsonData.Charts.Indicators;
 	dataParsed.Orders = jsonData.Orders;
 
+	let startIndex = 0;
+	for (const [key, value] of Object.entries(jsonData.Orders))
+	{
+		// 2021-10-20T00:00:00Z
+		const parseDateOrder = timeParse("%Y-%m-%dT%H:%M:%SZ");
+
+		const date = parseDateOrder(value.Time);
+		let index = newData.findIndex(d => d.date.getTime() === date.getTime());
+		console.log(index);
+	}
 	return newData;
 }
