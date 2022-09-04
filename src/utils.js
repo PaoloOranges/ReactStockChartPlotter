@@ -65,7 +65,6 @@ function parseAndFillIndicators(dataArray, indicators)
 {
 	for (const [key, value] of Object.entries(indicators))
 	{
-		console.log("Indicator: " + key);
 		const indicator = value.Values.map( v =>
 						({ date: parseDateEpoch(v.x),
 						   value: v.y})

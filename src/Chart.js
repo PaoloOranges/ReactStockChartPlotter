@@ -3,14 +3,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { scaleTime } from "d3-scale";
+import { curveMonotoneX } from "d3-shape";
 import { utcDay } from "d3-time";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
-import { LineSeries, ScatterSeries, SquareMarker, TriangleMarker } from "react-stockcharts/lib/series";
+import { AreaSeries, LineSeries, ScatterSeries, SquareMarker, TriangleMarker } from "react-stockcharts/lib/series";
 
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
+import { createVerticalLinearGradient, hexToRGBA } from "react-stockcharts/lib/utils";
+
+const canvasGradient = createVerticalLinearGradient([
+	{ stop: 0, color: hexToRGBA("#b5d0ff", 0.2) },
+	{ stop: 0.7, color: hexToRGBA("#6fa4fc", 0.4) },
+	{ stop: 1, color: hexToRGBA("#4286f4", 0.8) },
+]);
 
 class CustomChart extends React.Component {
 	render() {
@@ -50,7 +58,7 @@ class CustomChart extends React.Component {
 					<YAxis axisAt="left" orient="left" ticks={5} />
 					{/* <CandlestickSeries width={timeIntervalBarWidth(utcDay)}/> */}
 
-					<LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
+					<AreaSeries yAccessor={d => d.close} strokeDasharray="Solid" strokeWidth={2} interpolation={curveMonotoneX}	canvasGradient={canvasGradient} />
 					<ScatterSeries yAccessor={buyOrderAccessor} marker={SquareMarker} markerProps={{ width: 10, stroke: "#34eb5e", fill: "#34eb93" }} />
 					<ScatterSeries yAccessor={sellOrderAccessor} marker={TriangleMarker} markerProps={{ width: 10, stroke: "#eb3434", fill: "#eb7434" }} />
 				</Chart>
