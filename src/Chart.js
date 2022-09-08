@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { scaleTime } from "d3-scale";
 import { curveMonotoneX } from "d3-shape";
 import { format } from "d3-format";
+import { timeFormat } from "d3-time-format";
 import { utcDay } from "d3-time";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
@@ -79,10 +80,15 @@ class CustomChart extends React.Component {
 				<Chart id={1} yExtents={d => [d.close, d.close]}>
 					<XAxis axisAt="bottom" orient="bottom" ticks={6}/>
 					<YAxis axisAt="left" orient="left" ticks={5} />
+					<MouseCoordinateX
+						at="bottom"
+						orient="bottom"
+						displayFormat={timeFormat("%Y-%m-%d")}
+					/>
 					<MouseCoordinateY
-						at="right"
-						orient="right"
-						displayFormat={format(".2f")}
+						at="left"
+						orient="left"
+						displayFormat={format("r")}
 					/>
 
 					<AreaSeries yAccessor={d => d.close} strokeDasharray="Solid" strokeWidth={2} interpolation={curveMonotoneX}	canvasGradient={canvasGradient} />
@@ -95,7 +101,7 @@ class CustomChart extends React.Component {
 					<LineSeries yAccessor={wmaAccessor} strokeDasharray="Solid" stroke="#46fc3d"/>
 
 				</Chart>
-
+				<CrossHairCursor />
 			</ChartCanvas>
 		);
 	}
