@@ -38,7 +38,7 @@ export function getDataLocal() {
 	);
 	
 	newData = parseAndFillOrders(newData, jsonData.Orders);
-	parseAndFillIndicators(newData, jsonData.Charts.Indicators.Series);
+	newData = parseAndFillIndicators(newData, jsonData.Charts.Indicators.Series);
 
 	return newData;
 }
@@ -82,4 +82,6 @@ function parseAndFillIndicators(dataArray, indicators)
 			}
 		}
 	}
+
+	return dataArray;
 }

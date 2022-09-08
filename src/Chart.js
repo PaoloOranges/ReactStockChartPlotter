@@ -22,6 +22,14 @@ const canvasGradient = createVerticalLinearGradient([
 	{ stop: 1, color: hexToRGBA("#4286f4", 0.8) },
 ]);
 
+function indicatorAccess(indicatorName, element)
+{
+	if(element.indicators !== undefined && element.indicators[indicatorName] !== undefined)
+	{
+		return element.indicators[indicatorName];
+	}
+}
+
 class CustomChart extends React.Component {
 	render() {
 		const { type, width, data, ratio} = this.props;
@@ -44,12 +52,10 @@ class CustomChart extends React.Component {
 			}
 		}
 
-		const hullMAAccessor = d => {
-			if(d.indicators !== undefined && d.indicators.HullMA !== undefined)
-			{
-				return d.indicators.HullMA;
-			}
-		}
+		const hullMAAccessor = d => indicatorAccess('HullMA', d);
+		const lsmaAccessor = d => indicatorAccess('LSMA', d);
+		const wmaAccessor = d => indicatorAccess('WMA', d);
+
 		return (
 			<ChartCanvas height={600}
 					ratio={ratio}
@@ -71,7 +77,11 @@ class CustomChart extends React.Component {
 					<ScatterSeries yAccessor={buyOrderAccessor} marker={SquareMarker} markerProps={{ width: 10, stroke: "#34eb5e", fill: "#34eb93" }} />
 					<ScatterSeries yAccessor={sellOrderAccessor} marker={TriangleMarker} markerProps={{ width: 10, stroke: "#eb3434", fill: "#eb7434" }} />
 					
-					<CharCustomIndicatorRender hullMAAccessor={hullMAAccessor}/>
+					{/* <CharCustomIndicatorRender hullMAAccessor={hullMAAccessor}/> */}
+					<LineSeries yAccessor={hullMAAccessor} strokeDasharray="Solid" />
+					<LineSeries yAccessor={lsmaAccessor} strokeDasharray="Solid" />
+					<LineSeries yAccessor={wmaAccessor} strokeDasharray="Solid" />
+
 				</Chart>
 
 			</ChartCanvas>

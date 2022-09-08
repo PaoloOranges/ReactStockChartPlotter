@@ -12,8 +12,12 @@ class CharCustomIndicatorRender extends React.Component {
     };    
   }
 
-  render() {
-    return <LineSeries yAccessor={this.state.hullMAAccessor} strokeDasharray="Solid" />;
+  render() 
+  {
+    return [
+    <LineSeries yAccessor={this.state.hullMAAccessor} strokeDasharray="Solid" />,
+    <LineSeries yAccessor={this.state.hullMAAccessor} strokeDasharray="Solid" />
+    ];
   }
 }
 
