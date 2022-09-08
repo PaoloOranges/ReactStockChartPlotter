@@ -78,9 +78,9 @@ class CustomChart extends React.Component {
 					<ScatterSeries yAccessor={sellOrderAccessor} marker={TriangleMarker} markerProps={{ width: 10, stroke: "#eb3434", fill: "#eb7434" }} />
 					
 					{/* <CharCustomIndicatorRender hullMAAccessor={hullMAAccessor}/> */}
-					<LineSeries yAccessor={hullMAAccessor} strokeDasharray="Solid" />
-					<LineSeries yAccessor={lsmaAccessor} strokeDasharray="Solid" />
-					<LineSeries yAccessor={wmaAccessor} strokeDasharray="Solid" />
+					<LineSeries yAccessor={hullMAAccessor} strokeDasharray="Solid" stroke="#ff7f0e"/>
+					<LineSeries yAccessor={lsmaAccessor} strokeDasharray="Solid" stroke="#fcf63d"/>
+					<LineSeries yAccessor={wmaAccessor} strokeDasharray="Solid" stroke="#46fc3d"/>
 
 				</Chart>
 
