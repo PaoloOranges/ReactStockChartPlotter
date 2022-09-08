@@ -4,12 +4,20 @@ import PropTypes from "prop-types";
 
 import { scaleTime } from "d3-scale";
 import { curveMonotoneX } from "d3-shape";
+import { format } from "d3-format";
 import { utcDay } from "d3-time";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
 import { AreaSeries, LineSeries, ScatterSeries, SquareMarker, TriangleMarker } from "react-stockcharts/lib/series";
 
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
+import {
+	CrossHairCursor,
+	CurrentCoordinate,
+	MouseCoordinateX,
+	MouseCoordinateY
+  } from "react-stockcharts/lib/coordinates";
+
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { createVerticalLinearGradient, hexToRGBA } from "react-stockcharts/lib/utils";
@@ -71,7 +79,11 @@ class CustomChart extends React.Component {
 				<Chart id={1} yExtents={d => [d.close, d.close]}>
 					<XAxis axisAt="bottom" orient="bottom" ticks={6}/>
 					<YAxis axisAt="left" orient="left" ticks={5} />
-					{/* <CandlestickSeries width={timeIntervalBarWidth(utcDay)}/> */}
+					<MouseCoordinateY
+						at="right"
+						orient="right"
+						displayFormat={format(".2f")}
+					/>
 
 					<AreaSeries yAccessor={d => d.close} strokeDasharray="Solid" strokeWidth={2} interpolation={curveMonotoneX}	canvasGradient={canvasGradient} />
 					<ScatterSeries yAccessor={buyOrderAccessor} marker={SquareMarker} markerProps={{ width: 10, stroke: "#34eb5e", fill: "#34eb93" }} />
