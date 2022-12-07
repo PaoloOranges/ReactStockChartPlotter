@@ -19,6 +19,10 @@ import {
 	MouseCoordinateY
   } from "react-stockcharts/lib/coordinates";
 
+  import {
+	MovingAverageTooltip
+  } from "react-stockcharts/lib/tooltip";
+
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { createVerticalLinearGradient, hexToRGBA } from "react-stockcharts/lib/utils";
@@ -80,6 +84,20 @@ class CustomChart extends React.Component {
 				<Chart id={1} yExtents={d => [d.close, d.close]}>
 					<XAxis axisAt="bottom" orient="bottom" ticks={6}/>
 					<YAxis axisAt="left" orient="left" ticks={5} />
+
+					<MovingAverageTooltip
+						onClick={(e) => console.log(e)}
+						origin={[-38, 15]}
+						options={[
+							{
+								yAccessor: hullMAAccessor,
+								type: "HullMA",
+								stroke: "#ff7f0e",								
+								echo: "some echo here"
+							},
+						]}
+					/>
+
 					<MouseCoordinateX
 						at="bottom"
 						orient="bottom"
